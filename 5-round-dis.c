@@ -16,7 +16,7 @@
 #include "boxes-ref.dat"
 
 #define Round 5
-#define ntest 10
+#define ntest 5
 
 word8 cipher[65536][16];
 word8 cipher1[65536][16];
@@ -430,8 +430,7 @@ int aescase(word8 key[][8]){
 		}
 	}
 	
-	
-	printf(" For AES, %d plaintext pair(s), p'1+p'2, in  diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
+	printf("For AES, the number of plaintext pair(s) such that their difference is in diagonal space with |L|=3 are %d after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
 	
 	
 	return (counter1);
@@ -527,8 +526,8 @@ int randompermutation(word8 key[][8]){
 	}
 	
 	
-	printf("For random permutation, %d plaintext pair(s), p'1+p'2, in diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
-	
+	printf("For random permutation, the number of plaintext pair(s) such that their difference is in diagonal space with |L|=3 are %d after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
+
 	
 	return (counter1);
 	
@@ -558,8 +557,8 @@ int main() {
 		counter+=aescase(k);
 		counter1+=randompermutation(k);
 	}
-	printf("\n For AES, total number plaitnext pairs in diagonal space with |L|=3  are %d after %d tests \n",counter,ntest);
-	printf("\n For random permutation, total number plaitnext pairs in diagonal space with |L|=3  are %d after %d tests \n",counter1,ntest);
+	printf("\nFor AES, total number plaitnext pairs such that their difference is in diagonal space with |L|=3 are %d after %d tests \n",counter,ntest);
+	printf("\nFor random permutation, total number plaitnext pairs such that their difference is in diagonal space with |L|=3 are %d after %d tests \n",counter1,ntest);
 	return (0);
 }
 
