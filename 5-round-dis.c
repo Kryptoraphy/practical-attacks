@@ -431,7 +431,7 @@ int aescase(word8 key[][8]){
 	}
 	
 	
-	printf(" For AES, %d plaintext pair(s) p'1+p'2 in  diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
+	printf(" For AES, %d plaintext pair(s), p'1+p'2, in  diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
 	
 	
 	return (counter1);
@@ -527,7 +527,7 @@ int randompermutation(word8 key[][8]){
 	}
 	
 	
-	printf("For random permutation, %d plaintext pair(s) p'1+p'2 in diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
+	printf("For random permutation, %d plaintext pair(s), p'1+p'2, in diagonal space with |L|=3 after encrypting %d CP and derypting %d ACC\n",counter1,counter,counter2);
 	
 	
 	return (counter1);
@@ -554,11 +554,12 @@ int main() {
 	printf("\n");
 	
 	for( i=0; i<ntest ; i++){
+		printf("\nTest number: %d\n",i+1);
 		counter+=aescase(k);
 		counter1+=randompermutation(k);
 	}
-	printf("\n For AES, total number plaitnext pairs in diagonal space with |L|=3 after are %d after %d tests \n",counter,ntest);
-	printf("\n For random permutation, total number plaitnext pairs in diagonal space with |L|=3 after are %d after %d tests \n",counter1,ntest);
+	printf("\n For AES, total number plaitnext pairs in diagonal space with |L|=3  are %d after %d tests \n",counter,ntest);
+	printf("\n For random permutation, total number plaitnext pairs in diagonal space with |L|=3  are %d after %d tests \n",counter1,ntest);
 	return (0);
 }
 
