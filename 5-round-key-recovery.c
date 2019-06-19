@@ -16,8 +16,8 @@
 #include "boxes-ref.dat"
 
 #define Round 5
-#define Ntest 10
-#define printstate   0   //set one to print intermediate states
+#define Ntest 5
+
 word8 cipher[65536][16];
 word8 cipher1[65536][16];
 word8 plain[65536][16];
@@ -458,205 +458,15 @@ void keyrecovery(word8 key[][8]){
 						if (CheckDiagonal(test)){
 							counter++;
 							if((diff==rkey[0]) &&(diff1==rkey[1]) )
-								printf("find a pair with p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
+								printf("found key candidates p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
 							if(((diff^0x1)==rkey[0]) &&(diff1==rkey[1]) )
-								printf("find a pair with p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
+								printf("found key candidates p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
 							if((diff==rkey[0]) &&((diff1^0x1)==rkey[1]) )
-								printf("find a pair with p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
+								printf("found key candidates p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
 							if(((diff^0x1)==rkey[0]) &&((diff1^0x1)==rkey[1]) )
-								printf("find a pair with p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
-							
-							if(printstate){
-								for(i=0; i<4 ;i++)
-									for(j=0; j<4 ;j++)
-										test2[i][j]=plain[256*diff+diff1][4*i+j];
-								for(i=0; i<4 ;i++)
-									for(j=0; j<4 ;j++)
-										test3[i][j]=plain1[256*diff+diff1][4*i+j];
-								Print(temp2);
-								Print(temp3);
-								Print(test2);
-								Print(test3);
-								printf("\n\n");
+								printf("found key candidates p[0][0]^p[1][1]=%d, p[0][0]^p[2][2]=%d\n",diff,diff1);
 							
 							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									rp[i][j]=plain[256*diff+diff1][4*i+j];
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									rp1[i][j]=plain1[256*diff+diff1][4*i+j];
-							
-							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test2[i][j]=rp[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test3[i][j]=rp1[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp2[i][j]=rp2[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp3[i][j]=rp3[i][j];
-							
-							Encrypt(test2,rk,1);
-							Encrypt(test3,rk,1);
-							Encrypt(temp2,rk,1);
-							Encrypt(temp3,rk,1);
-							
-							printf("R(P1):\n");
-							Print(test2);
-							printf("R(P2):\n");
-							Print(test3);
-							printf("R(P3):\n");
-							Print(temp2);
-							printf("R(P4):\n");
-							Print(temp3);
-							printf("R(P1)+R(P2):\n");
-							PrintXOR(test2,test3);
-							printf("R(P3)+R(P4):\n");
-							PrintXOR(temp2,temp3);
-							printf("R(P1)+R(P3):\n");
-							PrintXOR(test2,temp2);
-							printf("R(P2)+R(P4):\n");
-							PrintXOR(test3,temp3);
-							
-							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test2[i][j]=rp[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test3[i][j]=rp1[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp2[i][j]=rp2[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp3[i][j]=rp3[i][j];
-							
-							
-							Encrypt(temp2,rk,2);
-							Encrypt(temp3,rk,2);
-							Encrypt(test2,rk,2);
-							Encrypt(test3,rk,2);
-							
-							printf("R^2(P1):\n");
-							Print(test2);
-							printf("R^2(P2):\n");
-							Print(test3);
-							printf("R^2(P3):\n");
-							Print(temp2);
-							printf("R^2(P4):\n");
-							Print(temp3);
-							printf("R^2(P1)+R^2(P2):\n");
-							PrintXOR(test2,test3);
-							printf("R^2(P3)+R^2(P4):\n");
-							PrintXOR(temp2,temp3);
-							printf("R^2(P1)+R^2(P3):\n");
-							PrintXOR(test2,temp2);
-							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test2[i][j]=rp[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test3[i][j]=rp1[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp2[i][j]=rp2[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp3[i][j]=rp3[i][j];
-							
-							Encrypt(test2,rk,3);
-							Encrypt(test3,rk,3);
-							Encrypt(temp2,rk,3);
-							Encrypt(temp3,rk,3);
-							printf("R^3(P1):\n");
-							Print(test2);
-							printf("R^3(P2):\n");
-							Print(test3);
-							printf("R^3(P3):\n");
-							Print(temp2);
-							printf("R^3(P4):\n");
-							Print(temp3);
-							printf("R^3(P1)+R^3(P2):\n");
-							PrintXOR(test2,test3);
-							printf("R^3(P3)+R^3(P4):\n");
-							PrintXOR(temp2,temp3);
-							printf("R^3(P1)+R^3(P3):\n");
-							PrintXOR(test2,temp2);
-							//printf("after four rounds encryption\n");
-							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test2[i][j]=rp[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test3[i][j]=rp1[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp2[i][j]=rp2[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp3[i][j]=rp3[i][j];
-							
-							
-							Encrypt(test2,rk,4);
-							Encrypt(test3,rk,4);
-							Encrypt(temp2,rk,4);
-							Encrypt(temp3,rk,4);
-							printf("R^4(P1):\n");
-							Print(test2);
-							printf("R^4(P2):\n");
-							Print(test3);
-							printf("R^4(P3):\n");
-							Print(temp2);
-							printf("R^4(P4):\n");
-							Print(temp3);
-							printf("R^4(P1)+R^4(P2):\n");
-							PrintXOR(test2,test3);
-							printf("R^4(P3)+R^4(P4):\n");
-							PrintXOR(temp2,temp3);
-							printf("R^4(P1)+R^4(P3):\n");
-							PrintXOR(test2,temp2);
-							//	printf("after five rounds encryption\n");
-							
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test2[i][j]=rp[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									test3[i][j]=rp1[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp2[i][j]=rp2[i][j] ;
-							for(i=0; i<4 ;i++)
-								for(j=0; j<4 ;j++)
-									temp3[i][j]=rp3[i][j];
-							
-							SuperEnc5(test2,rk);
-							SuperEnc5(test3,rk);
-							SuperEnc5(temp2,rk);
-							SuperEnc5(temp3,rk);
-							printf("C1:\n");
-							Print(test2);
-							printf("C2:\n");
-							Print(test3);
-							printf("C3:\n");
-							Print(temp2);
-							printf("C4:\n");
-							Print(temp3);
-							printf("C1+C2:\n");
-							PrintXOR(test2,test3);
-							printf("C3+C4:\n");
-							PrintXOR(temp2,temp3);
-							printf("C1+C3:\n");
-							PrintXOR(test2,temp2);
-							}
 						}
 					}
 				}
@@ -674,7 +484,7 @@ int main() {
 	int i,j,l;
 	for( l=0; l< Ntest; l++){
 		counter=0;
-		
+		printf("\nTest number: %d\n",l+1);
 		for( i=0; i< 4; i++){
 			for( j=0; j < 4; j++){
 				k[i][j] = randomByte();
@@ -689,9 +499,10 @@ int main() {
 		}
 		printf("\n");
 		printf("k_00+k_11= %d,k_00+k_22=%d \n", k[0][0]^k[1][1],k[0][0]^k[2][2]);
+		printf("\nStart key recovery attack \n");
 		for( i=0; i< 556; i++)
 			keyrecovery(k);
-		printf("number of all candidates %d\n",counter);
+		printf("Total number of candidates %d\n",counter);
 	}
 }
 
